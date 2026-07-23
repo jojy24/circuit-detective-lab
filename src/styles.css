@@ -8,6 +8,7 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-hand: "Caveat", "Instrument Serif", cursive;
 }
 
 /*
@@ -72,42 +73,41 @@
 
 :root {
   --radius: 0.625rem;
-  /* Circuit Detective — engineering lab notebook */
-  --background: oklch(0.97 0.018 82);
-  --foreground: oklch(0.22 0.02 250);
-  --card: oklch(0.995 0.008 85);
-  --card-foreground: oklch(0.22 0.02 250);
-  --popover: oklch(0.995 0.008 85);
-  --popover-foreground: oklch(0.22 0.02 250);
-  --primary: oklch(0.68 0.19 42);
-  --primary-foreground: oklch(0.99 0.005 85);
-  --primary-hover: oklch(0.62 0.20 40);
-  --secondary: oklch(0.55 0.16 245);
-  --secondary-foreground: oklch(0.99 0.005 85);
-  --muted: oklch(0.93 0.02 82);
-  --muted-foreground: oklch(0.44 0.02 250);
-  --accent: oklch(0.82 0.13 190);
-  --accent-foreground: oklch(0.20 0.05 240);
-  --success: oklch(0.70 0.16 155);
-  --success-foreground: oklch(0.99 0.005 85);
-  --destructive: oklch(0.58 0.22 27);
-  --destructive-foreground: oklch(0.99 0.005 85);
-  --border: oklch(0.85 0.02 82);
-  --input: oklch(0.90 0.02 82);
-  --ring: oklch(0.68 0.19 42);
-  --workspace: oklch(0.955 0.020 82);
-  --wire-red: oklch(0.62 0.22 27);
-  --wire-yellow: oklch(0.83 0.16 90);
-  --wire-blue: oklch(0.55 0.16 245);
-  --wire-green: oklch(0.70 0.16 155);
-  --resistor-body: oklch(0.78 0.10 70);
-  --pcb-green: oklch(0.42 0.10 155);
-  --tape: oklch(0.88 0.14 88 / 0.75);
-  --ink: oklch(0.30 0.06 250);
-  --shadow-paper: 0 1px 0 oklch(0.22 0.02 250 / 0.04), 0 8px 20px oklch(0.22 0.02 250 / 0.10), 0 22px 40px oklch(0.22 0.02 250 / 0.06);
-  --shadow-lifted: 0 2px 0 oklch(0.22 0.02 250 / 0.05), 0 18px 30px oklch(0.22 0.02 250 / 0.14);
-  --grid-dot: oklch(0.22 0.02 250 / 0.10);
-  --rule-line: oklch(0.55 0.16 245 / 0.22);
+  /* Circuit Detective — premium notebook palette */
+  --background: oklch(0.965 0.028 88);          /* warm cream */
+  --foreground: oklch(0.24 0.08 265);           /* deep navy ink */
+  --card: oklch(0.99 0.012 88);                 /* soft paper */
+  --card-foreground: oklch(0.24 0.08 265);
+  --popover: oklch(0.99 0.012 88);
+  --popover-foreground: oklch(0.24 0.08 265);
+  /* Coral primary */
+  --primary: oklch(0.72 0.17 30);
+  --primary-foreground: oklch(0.99 0.008 85);
+  --primary-hover: oklch(0.66 0.19 28);
+  /* Turquoise secondary */
+  --secondary: oklch(0.75 0.13 190);
+  --secondary-foreground: oklch(0.24 0.08 265);
+  --muted: oklch(0.93 0.028 85);
+  --muted-foreground: oklch(0.46 0.05 260);
+  /* Lavender accent */
+  --accent: oklch(0.78 0.09 300);
+  --accent-foreground: oklch(0.28 0.09 285);
+  /* Soft yellow highlight */
+  --highlight: oklch(0.90 0.14 92);
+  --success: oklch(0.72 0.15 160);
+  --success-foreground: oklch(0.24 0.08 265);
+  --destructive: oklch(0.62 0.21 27);
+  --destructive-foreground: oklch(0.99 0.008 85);
+  --border: oklch(0.86 0.02 85);
+  --input: oklch(0.90 0.02 85);
+  --ring: oklch(0.72 0.17 30);
+  --workspace: oklch(0.945 0.028 88);
+  --ink: oklch(0.28 0.09 265);
+  --tape: oklch(0.90 0.14 92 / 0.72);
+  --shadow-paper: 0 1px 0 oklch(0.24 0.08 265 / 0.04), 0 10px 24px oklch(0.24 0.08 265 / 0.08), 0 24px 44px oklch(0.24 0.08 265 / 0.05);
+  --shadow-lifted: 0 2px 0 oklch(0.24 0.08 265 / 0.05), 0 20px 36px oklch(0.24 0.08 265 / 0.12);
+  --grid-dot: oklch(0.24 0.08 265 / 0.10);
+  --rule-line: oklch(0.55 0.13 250 / 0.20);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
