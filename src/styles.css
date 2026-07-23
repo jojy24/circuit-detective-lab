@@ -47,6 +47,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-workspace: var(--workspace);
