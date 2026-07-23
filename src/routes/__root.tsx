@@ -84,14 +84,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Interactive engineering cases that teach systematic debugging of electronic systems. Investigate, hypothesize, and diagnose like a real engineer.",
       },
       { name: "author", content: "Jana" },
-      { property: "og:title", content: "Circuit Detective" },
+      { property: "og:title", content: "Circuit Detective — Learn to Think Like an Engineer" },
       {
         property: "og:description",
         content:
-          "Investigate failures, analyze evidence, and master systematic debugging through interactive engineering cases.",
+          "Interactive engineering cases that teach systematic debugging of electronic systems. Investigate, hypothesize, and diagnose like a real engineer.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Circuit Detective — Learn to Think Like an Engineer" },
+      { name: "twitter:description", content: "Interactive engineering cases that teach systematic debugging of electronic systems. Investigate, hypothesize, and diagnose like a real engineer." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/7ec791c6-a2e5-4c97-b437-76f27e98a6f9" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/7ec791c6-a2e5-4c97-b437-76f27e98a6f9" },
     ],
     links: [
       {
