@@ -166,5 +166,47 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
+}
+
+/* ---------- Custom utilities ---------- */
+
+@utility font-editorial {
+  font-family: var(--font-serif);
+  font-feature-settings: "liga", "dlig";
+  letter-spacing: -0.015em;
+}
+
+@utility font-tech {
+  font-family: var(--font-mono);
+  font-feature-settings: "ss01", "zero";
+}
+
+@utility bg-paper {
+  background-color: var(--card);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+@utility bg-notebook {
+  background-color: var(--card);
+  background-image: linear-gradient(var(--rule-line) 1px, transparent 1px);
+  background-size: 100% 28px;
+  background-position: 0 27px;
+}
+
+@utility bg-workbench {
+  background-color: var(--workspace);
+  background-image:
+    radial-gradient(var(--grid-dot) 1px, transparent 1.2px),
+    linear-gradient(180deg, oklch(0.97 0.018 82) 0%, oklch(0.93 0.024 82) 100%);
+  background-size: 22px 22px, 100% 100%;
+}
+
+@utility ink-underline {
+  background-image: linear-gradient(transparent 62%, oklch(0.83 0.16 90 / 0.55) 62%, oklch(0.83 0.16 90 / 0.55) 92%, transparent 92%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 0.15em;
 }
