@@ -211,3 +211,15 @@
   background-size: 100% 100%;
   padding: 0 0.15em;
 }
+
+@utility font-hand {
+  font-family: var(--font-hand);
+  letter-spacing: 0;
+}
+
+@utility bg-cream {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
+  background-size: 24px 24px;
+}
