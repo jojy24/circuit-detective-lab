@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as NotebookRouteImport } from './routes/notebook'
 import { Route as HubRouteImport } from './routes/hub'
+import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseIdRouteImport } from './routes/case.$id'
 
@@ -22,6 +23,11 @@ const NotebookRoute = NotebookRouteImport.update({
 const HubRoute = HubRouteImport.update({
   id: '/hub',
   path: '/hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CertificateRoute = CertificateRouteImport.update({
+  id: '/certificate',
+  path: '/certificate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const CaseIdRoute = CaseIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/certificate': typeof CertificateRoute
   '/hub': typeof HubRoute
   '/notebook': typeof NotebookRoute
   '/case/$id': typeof CaseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/certificate': typeof CertificateRoute
   '/hub': typeof HubRoute
   '/notebook': typeof NotebookRoute
   '/case/$id': typeof CaseIdRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/certificate': typeof CertificateRoute
   '/hub': typeof HubRoute
   '/notebook': typeof NotebookRoute
   '/case/$id': typeof CaseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/hub' | '/notebook' | '/case/$id'
+  fullPaths: '/' | '/certificate' | '/hub' | '/notebook' | '/case/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/hub' | '/notebook' | '/case/$id'
-  id: '__root__' | '/' | '/hub' | '/notebook' | '/case/$id'
+  to: '/' | '/certificate' | '/hub' | '/notebook' | '/case/$id'
+  id: '__root__' | '/' | '/certificate' | '/hub' | '/notebook' | '/case/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CertificateRoute: typeof CertificateRoute
   HubRoute: typeof HubRoute
   NotebookRoute: typeof NotebookRoute
   CaseIdRoute: typeof CaseIdRoute
@@ -85,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HubRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/certificate': {
+      id: '/certificate'
+      path: '/certificate'
+      fullPath: '/certificate'
+      preLoaderRoute: typeof CertificateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CertificateRoute: CertificateRoute,
   HubRoute: HubRoute,
   NotebookRoute: NotebookRoute,
   CaseIdRoute: CaseIdRoute,

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Github, Search, ArrowUpRight, Lock } from "lucide-react";
 import heroWorkbench from "@/assets/hero-workbench.jpg";
 import compLed from "@/assets/comp-led.png";
@@ -174,16 +175,13 @@ function Hero() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
-            <button className="group inline-flex items-center gap-3 rounded-full bg-foreground px-6 py-3.5 font-tech text-[11px] uppercase tracking-[0.24em] text-background transition-transform hover:-translate-y-0.5">
-              Enter Case File #001
+            <Link to="/hub" className="group inline-flex items-center gap-3 rounded-full bg-foreground px-6 py-3.5 font-tech text-[11px] uppercase tracking-[0.24em] text-background transition-transform hover:-translate-y-0.5">
+              Enter the case files
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-            <a
-              href="#cases"
-              className="font-hand text-2xl text-primary underline decoration-wavy decoration-primary/40 underline-offset-4 hover:decoration-primary"
-            >
-              or peek at the cases →
-            </a>
+            </Link>
+            <Link to="/notebook" className="font-hand text-2xl text-primary underline decoration-wavy decoration-primary/40 underline-offset-4 hover:decoration-primary">
+              or peek at the notebook →
+            </Link>
           </div>
 
           {/* handwritten margin note */}
@@ -512,18 +510,19 @@ function CaseFile() {
               </dl>
 
               <div className="mt-10 flex flex-wrap items-center gap-6">
-                <button
-                  disabled
-                  className="inline-flex items-center gap-2 rounded-full bg-foreground/10 px-6 py-3 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground/60"
+                <Link
+                  to="/case/$id"
+                  params={{ id: "001" }}
+                  className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 font-tech text-[11px] uppercase tracking-[0.24em] text-background hover:-translate-y-0.5 transition-transform"
                 >
-                  <Lock className="h-3.5 w-3.5" /> Unlocks soon
-                </button>
-                <a
-                  href="#"
+                  Open case #001 →
+                </Link>
+                <Link
+                  to="/hub"
                   className="font-hand text-2xl text-primary underline decoration-wavy decoration-primary/40 underline-offset-4"
                 >
-                  read the briefing →
-                </a>
+                  see all files →
+                </Link>
               </div>
             </div>
           </div>
