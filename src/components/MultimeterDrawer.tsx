@@ -18,11 +18,11 @@ export function MultimeterDrawer({ active }: Props) {
     }
     setScanning(true);
     setDisplay(t.multimeter.scanning);
-    const t = window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setDisplay(active.reading);
       setScanning(false);
     }, 550);
-    return () => window.clearTimeout(t);
+    return () => window.clearTimeout(timer);
   }, [active, t]);
 
   const statusColor =
