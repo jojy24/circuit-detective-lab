@@ -5,6 +5,7 @@ import { CASES, type ComponentReading } from "@/lib/casesData";
 import { isCaseUnlocked, useProfile, useProgress } from "@/lib/store";
 import { MultimeterDrawer } from "@/components/MultimeterDrawer";
 import { SiteHeader } from "@/components/SiteHeader";
+import { fill, useI18n } from "@/localization/LocalizationContext";
 
 export const Route = createFileRoute("/case/$id")({
   head: ({ params }) => {
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/case/$id")({
 });
 
 function CasePage() {
+  const { t } = useI18n();
   const { id } = useParams({ from: "/case/$id" });
   const navigate = useNavigate();
   const { profile, hydrated: pH } = useProfile();
@@ -44,8 +46,8 @@ function CasePage() {
   if (!data) return (
     <div className="min-h-screen bg-cream"><SiteHeader />
       <div className="mx-auto max-w-3xl px-8 py-24 text-center">
-        <h1 className="font-editorial text-4xl italic">Case not found.</h1>
-        <Link to="/hub" className="mt-4 inline-block font-hand text-xl text-primary">← back to the desk</Link>
+        <h1 className="font-editorial text-4xl italic">{t.common.notFound}</h1>
+        <Link to="/hub" className="mt-4 inline-block font-hand text-xl text-primary">← {t.common.backToDesk}</Link>
       </div></div>
   );
 
@@ -68,9 +70,9 @@ function CasePage() {
     <div className="min-h-screen bg-cream text-foreground antialiased">
       <SiteHeader />
       <main className="mx-auto max-w-7xl px-6 pb-24 pt-6 sm:px-8">
-        <Link to="/hub" className="inline-flex items-center gap-1.5 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground/60 hover:text-primary"><ArrowLeft className="h-3.5 w-3.5" /> back to desk</Link>
+        <Link to="/hub" className="inline-flex items-center gap-1.5 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground/60 hover:text-primary"><ArrowLeft className="h-3.5 w-3.5" aria-hidden /> {t.investigation.backToDesk}</Link>
         <section className="mt-6 border-l-2 border-foreground/20 pl-6 sm:pl-8">
-          <div className="font-tech text-[10px] uppercase tracking-[0.32em] text-muted-foreground">incident report · case #{data.number} · {data.category}</div>
+          <div className="font-tech text-[10px] uppercase tracking-[0.32em] text-muted-foreground">{t.investigation.incident} #{data.number} · {data.category}</div>
           <h1 className="mt-3 font-editorial text-5xl italic leading-none text-foreground sm:text-6xl">{data.title}.</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground/80">{data.briefing}</p>
           <p className="mt-3 max-w-2xl font-hand text-xl text-ink">{data.scene}</p>
@@ -78,8 +80,8 @@ function CasePage() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
           <section>
             <div className="mb-4 flex items-center justify-between font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">
-              <span>evidence · workbench</span>
-              <span className="text-muted-foreground">{inspected.size}/{data.components.length} inspected</span>
+              <span>{t.investigation.evidenceWorkbench}</span>
+              <span className="text-muted-foreground">{inspected.size}/{data.components.length} {t.investigation.inspected}</span>
             </div>
             <div className="relative rounded-md bg-workbench p-6 shadow-[var(--shadow-paper)]">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -102,21 +104,21 @@ function CasePage() {
                   );
                 })}
               </div>
-              <p className="mt-4 font-hand text-lg text-ink">"click each component to probe it with the multimeter."</p>
+              <p className="mt-4 font-hand text-lg text-ink">{t.investigation.probeHint}</p>
             </div>
           </section>
           <aside className="space-y-6">
             <MultimeterDrawer active={active} />
             <div className="rounded-md bg-card p-6 shadow-[var(--shadow-paper)]">
               <div className="flex items-center justify-between">
-                <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">diagnosis panel</div>
-                <span className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{attempts} attempt{attempts === 1 ? "" : "s"}</span>
+                <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">{t.investigation.diagnosisPanel}</div>
+                <span className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{attempts} {attempts === 1 ? t.common.attempt : t.common.attempts}</span>
               </div>
               {!canDiagnose ? (
-                <p className="mt-4 font-hand text-lg text-ink">gather more evidence — probe at least {Math.max(2, data.components.length - 1)} components before submitting a diagnosis.</p>
+                <p className="mt-4 font-hand text-lg text-ink">{fill(t.investigation.gatherMore, { n: Math.max(2, data.components.length - 1) })}</p>
               ) : (
                 <>
-                  <p className="mt-3 text-sm text-foreground/75">Based on your measurements, select the most likely fault:</p>
+                  <p className="mt-3 text-sm text-foreground/75">{t.investigation.selectFault}</p>
                   <div className="mt-4 space-y-2">
                     {data.hypotheses.map((h) => {
                       const sel = chosen === h.id;
@@ -130,19 +132,19 @@ function CasePage() {
                   </div>
                   {feedback === "wrong" && (
                     <div className="mt-4 rounded-sm border border-destructive/30 bg-destructive/5 p-3">
-                      <div className="font-tech text-[10px] uppercase tracking-[0.24em] text-destructive">keep going, engineer</div>
+                      <div className="font-tech text-[10px] uppercase tracking-[0.24em] text-destructive">{t.investigation.keepGoing}</div>
                       <p className="mt-1 font-hand text-lg text-ink">"{data.hint}"</p>
-                      <button onClick={() => { setChosen(null); setFeedback("idle"); }} className="mt-2 inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.22em] text-primary hover:underline"><RotateCcw className="h-3 w-3" /> re-examine evidence</button>
+                      <button onClick={() => { setChosen(null); setFeedback("idle"); }} className="mt-2 inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.22em] text-primary hover:underline"><RotateCcw className="h-3 w-3" aria-hidden /> {t.investigation.reExamine}</button>
                     </div>
                   )}
                   {feedback === "correct" && (
                     <div className="mt-4 rounded-sm border border-success/40 bg-success/10 p-3">
-                      <div className="inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.24em] text-success"><CheckCircle2 className="h-3.5 w-3.5" /> case solved</div>
-                      <p className="mt-2 font-hand text-lg text-ink">+{data.xp} XP logged into your notebook.</p>
+                      <div className="inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.24em] text-success"><CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> {t.investigation.caseSolved}</div>
+                      <p className="mt-2 font-hand text-lg text-ink">{fill(t.investigation.xpLogged, { xp: data.xp })}</p>
                     </div>
                   )}
                   {feedback !== "correct" && (
-                    <button onClick={submit} disabled={!chosen} className="mt-4 w-full rounded-full bg-foreground px-6 py-3 font-tech text-[11px] uppercase tracking-[0.24em] text-background disabled:opacity-40">Submit engineering diagnosis</button>
+                    <button onClick={submit} disabled={!chosen} className="mt-4 w-full rounded-full bg-foreground px-6 py-3 font-tech text-[11px] uppercase tracking-[0.24em] text-background disabled:opacity-40">{t.investigation.submit}</button>
                   )}
                 </>
               )}
@@ -153,22 +155,22 @@ function CasePage() {
           <section className="mt-12 rounded-md bg-card p-8 shadow-[var(--shadow-lifted)] animate-fade-in">
             <div className="grid gap-8 md:grid-cols-2">
               <div>
-                <div className="inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.28em] text-primary"><Sparkles className="h-3.5 w-3.5" /> the physics</div>
-                <h2 className="mt-3 font-editorial text-3xl italic text-foreground">Why this failure happens.</h2>
+                <div className="inline-flex items-center gap-1.5 font-tech text-[10px] uppercase tracking-[0.28em] text-primary"><Sparkles className="h-3.5 w-3.5" aria-hidden /> {t.investigation.physics}</div>
+                <h2 className="mt-3 font-editorial text-3xl italic text-foreground">{t.investigation.whyTitle}</h2>
                 <p className="mt-4 text-[15px] leading-relaxed text-foreground/80">{data.explanation}</p>
-                <div className="mt-4"><div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">concepts mastered</div><p className="mt-1 font-hand text-lg text-ink">{data.concepts.join(" · ")}</p></div>
+                <div className="mt-4"><div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t.investigation.conceptsMastered}</div><p className="mt-1 font-hand text-lg text-ink">{data.concepts.join(" · ")}</p></div>
               </div>
               <div>
-                <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">your reflection · notebook</div>
-                <textarea value={reflection} onChange={(e) => setReflection(e.target.value.slice(0, 500))} rows={4} className="mt-3 w-full rounded-sm border border-foreground/20 bg-background p-3 font-hand text-lg text-ink outline-none focus:border-primary" placeholder="what did you notice? what will you check first next time?" />
-                <button onClick={() => solveCase({ caseId: data.id, solvedAt: progress.solved.find((r) => r.caseId === data.id)?.solvedAt ?? Date.now(), attempts, timeSeconds: Math.round((Date.now() - startRef.current) / 1000), xp: data.xp, concepts: data.concepts, reflection: reflection.trim() || undefined })} className="mt-2 font-tech text-[10px] uppercase tracking-[0.22em] text-primary hover:underline">save reflection</button>
+                <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">{t.investigation.reflectionLabel}</div>
+                <textarea value={reflection} onChange={(e) => setReflection(e.target.value.slice(0, 500))} rows={4} className="mt-3 w-full rounded-sm border border-foreground/20 bg-background p-3 font-hand text-lg text-ink outline-none focus:border-primary" placeholder={t.investigation.reflectionPlaceholder} />
+                <button onClick={() => solveCase({ caseId: data.id, solvedAt: progress.solved.find((r) => r.caseId === data.id)?.solvedAt ?? Date.now(), attempts, timeSeconds: Math.round((Date.now() - startRef.current) / 1000), xp: data.xp, concepts: data.concepts, reflection: reflection.trim() || undefined })} className="mt-2 font-tech text-[10px] uppercase tracking-[0.22em] text-primary hover:underline">{t.investigation.saveReflection}</button>
                 <div className="mt-6 flex flex-wrap gap-3">
                   {nextCase ? (
-                    <Link to="/case/$id" params={{ id: nextCase.id }} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-primary-foreground">Next case: {nextCase.title} →</Link>
+                    <Link to="/case/$id" params={{ id: nextCase.id }} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-primary-foreground">{t.investigation.nextCase} {nextCase.title} →</Link>
                   ) : (
-                    <Link to="/certificate" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-primary-foreground">Claim your certificate →</Link>
+                    <Link to="/certificate" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-primary-foreground">{t.investigation.claimCertificate}</Link>
                   )}
-                  <Link to="/hub" className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground">back to desk</Link>
+                  <Link to="/hub" className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-5 py-2.5 font-tech text-[11px] uppercase tracking-[0.24em] text-foreground">{t.investigation.backToDesk}</Link>
                 </div>
               </div>
             </div>
