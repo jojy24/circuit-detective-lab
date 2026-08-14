@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CASES } from "@/lib/casesData";
 import type { Progress } from "@/lib/store";
+import { useI18n } from "@/localization/LocalizationContext";
 
 type Props = {
   progress: Progress;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export function NotebookJournal({ progress, onUpdateReflection }: Props) {
+  const { t, lang } = useI18n();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
 
@@ -15,7 +17,7 @@ export function NotebookJournal({ progress, onUpdateReflection }: Props) {
     return (
       <div className="rounded-sm bg-card p-10 text-center shadow-[var(--shadow-paper)]">
         <p className="font-hand text-2xl text-ink">
-          "the notebook is still blank — solve a case to write your first entry."
+          {t.notebook.empty}
         </p>
       </div>
     );
@@ -45,31 +47,31 @@ export function NotebookJournal({ progress, onUpdateReflection }: Props) {
               <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-foreground/15 pb-3">
                 <div>
                   <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-secondary">
-                    entry · case #{data.number}
+                    {t.notebook.entry} #{data.number}
                   </div>
                   <h3 className="mt-1 font-editorial text-3xl italic text-foreground">
                     {data.title}
                   </h3>
                 </div>
                 <div className="text-right font-tech text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-                  <div>{date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</div>
+                  <div>{date.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", { month: "short", day: "numeric", year: "numeric" })}</div>
                   <div className="mt-1">
-                    {record.attempts} attempt{record.attempts === 1 ? "" : "s"} · +{record.xp} XP
+                    {record.attempts} {record.attempts === 1 ? t.common.attempt : t.common.attempts} · +{record.xp} {t.common.xp}
                   </div>
                 </div>
               </div>
               <div className="mt-4 grid gap-4 md:grid-cols-2">
                 <div>
-                  <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">fault</div>
+                  <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t.notebook.fault}</div>
                   <p className="mt-1 font-editorial text-xl italic text-primary">{data.fault}</p>
                 </div>
                 <div>
-                  <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">concepts mastered</div>
+                  <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t.notebook.concepts}</div>
                   <p className="mt-1 font-hand text-lg text-ink">{record.concepts.join(" · ")}</p>
                 </div>
               </div>
               <div className="mt-6">
-                <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">reflection</div>
+                <div className="font-tech text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t.notebook.reflection}</div>
                 {isEditing ? (
                   <div className="mt-2 space-y-2">
                     <textarea
@@ -77,17 +79,17 @@ export function NotebookJournal({ progress, onUpdateReflection }: Props) {
                       onChange={(e) => setDraft(e.target.value.slice(0, 500))}
                       rows={3}
                       className="w-full rounded-sm border border-foreground/20 bg-background/60 p-3 font-hand text-lg text-ink outline-none focus:border-primary"
-                      placeholder="what did you learn?"
+                      placeholder={t.notebook.reflectionPlaceholder}
                     />
                     <div className="flex gap-2">
                       <button
                         onClick={() => { onUpdateReflection(record.caseId, draft); setEditing(null); }}
                         className="rounded-full bg-foreground px-4 py-1.5 font-tech text-[10px] uppercase tracking-[0.22em] text-background"
-                      >save</button>
+                      >{t.common.save}</button>
                       <button
                         onClick={() => setEditing(null)}
                         className="rounded-full border border-foreground/20 px-4 py-1.5 font-tech text-[10px] uppercase tracking-[0.22em] text-foreground/70"
-                      >cancel</button>
+                      >{t.common.cancel}</button>
                     </div>
                   </div>
                 ) : (
@@ -95,7 +97,7 @@ export function NotebookJournal({ progress, onUpdateReflection }: Props) {
                     onClick={() => { setEditing(record.caseId); setDraft(record.reflection ?? ""); }}
                     className="mt-2 block w-full text-left font-hand text-xl leading-snug text-ink hover:text-primary"
                   >
-                    {record.reflection || "— add a reflection —"}
+                    {record.reflection || t.notebook.addReflection}
                   </button>
                 )}
               </div>

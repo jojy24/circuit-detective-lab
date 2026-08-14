@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Lock, Check } from "lucide-react";
 import type { CaseData } from "@/lib/casesData";
+import { useI18n } from "@/localization/LocalizationContext";
 
 type Props = {
   caseData: CaseData;
@@ -17,6 +18,7 @@ const colorMap: Record<string, string> = {
 };
 
 export function CaseCard({ caseData, index, unlocked, solved }: Props) {
+  const { t } = useI18n();
   const rot = index % 2 === 0 ? -1.2 : 1.4;
   const content = (
     <div
@@ -30,7 +32,7 @@ export function CaseCard({ caseData, index, unlocked, solved }: Props) {
       <div className="flex items-start justify-between">
         <div>
           <div className="font-tech text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-            case file
+            {t.caseCard.caseFile}
           </div>
           <div className="font-editorial text-4xl italic leading-none text-foreground">
             #{caseData.number}
@@ -56,13 +58,13 @@ export function CaseCard({ caseData, index, unlocked, solved }: Props) {
       <div className="mt-5 flex items-center justify-between">
         {solved ? (
           <span className="inline-flex items-center gap-1.5 font-tech text-[11px] uppercase tracking-[0.22em] text-success">
-            <Check className="h-3.5 w-3.5" /> Solved
+            <Check className="h-3.5 w-3.5" aria-hidden /> {t.common.solved}
           </span>
         ) : unlocked ? (
-          <span className="font-hand text-lg text-primary">open the file →</span>
+          <span className="font-hand text-lg text-primary">{t.caseCard.open}</span>
         ) : (
           <span className="inline-flex items-center gap-1.5 font-tech text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-            <Lock className="h-3.5 w-3.5" /> Locked
+            <Lock className="h-3.5 w-3.5" aria-hidden /> {t.common.locked}
           </span>
         )}
       </div>

@@ -223,3 +223,29 @@
     radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
   background-size: 24px 24px;
 }
+
+/* ---- Arabic / RTL typography ---- */
+@utility font-arabic {
+  font-family: "IBM Plex Sans Arabic", "Reem Kufi", var(--font-body), sans-serif;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] .font-editorial,
+[dir="rtl"] .font-hand,
+[dir="rtl"] .font-tech {
+  font-family: "Reem Kufi", "IBM Plex Sans Arabic", var(--font-body), sans-serif;
+}
+
+[dir="rtl"] .font-editorial {
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .italic {
+  font-style: normal;
+}
+
+[dir="rtl"] .font-tech,
+[dir="rtl"] .uppercase {
+  letter-spacing: 0;
+}
