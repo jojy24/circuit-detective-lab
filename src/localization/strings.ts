@@ -262,11 +262,16 @@ export const en = {
   },
 } as const;
 
-export type Dict = typeof en;
+/** Widen literal types so translations aren't forced to equal the English text. */
+type Widen<T> = T extends string
+  ? string
+  : T extends readonly (infer U)[]
+    ? readonly Widen<U>[]
+    : { -readonly [K in keyof T]: Widen<T[K]> };
 
-type DeepMutable<T> = { -readonly [K in keyof T]: T[K] extends object ? DeepMutable<T[K]> : T[K] };
+export type Dict = Widen<typeof en>;
 
-export const ar: DeepMutable<Dict> = {
+export const ar: Dict = {
   meta: {
     langName: "العربية",
     otherLangName: "English",
